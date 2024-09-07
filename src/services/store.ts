@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { ingredientsReducer } from '../slices/ingredientsSlice';
 import { orderReducer } from '../slices/orderSlice';
-
+import { feedReducer } from '../slices/feedSlice';
 import {
   TypedUseSelectorHook,
   useDispatch as dispatchHook,
@@ -10,7 +10,8 @@ import {
 
 const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
-  order: orderReducer
+  order: orderReducer,
+  feed: feedReducer
 });
 
 const store = configureStore({
