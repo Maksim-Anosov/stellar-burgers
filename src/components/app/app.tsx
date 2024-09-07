@@ -38,7 +38,7 @@ const App = () => {
       <AppHeader />
       <Routes>
         <Route path='/' element={<ConstructorPage />} />
-        {/* <Route path='/feed' element={<Feed />} />
+        <Route path='/feed' element={<Feed />} />
         <Route
           path='/login'
           element={
@@ -87,7 +87,7 @@ const App = () => {
             </PrivateRoute>
           }
         />
-        <Route path='*' element={<NotFound404 />} /> */}
+        <Route path='*' element={<NotFound404 />} />
       </Routes>
     </div>
   );

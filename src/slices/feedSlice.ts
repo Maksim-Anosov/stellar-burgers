@@ -5,8 +5,10 @@ import { TIngredient, TOrder } from '@utils-types';
 type TFeedState = {
   orders: TOrder[];
   ingredients: TIngredient[];
-  total: number;
-  totalToday: number;
+  feed: {
+    total: number;
+    totalToday: number;
+  };
   isLoading: boolean;
   error: string | undefined;
   number: number;
@@ -15,8 +17,10 @@ type TFeedState = {
 const inittalState: TFeedState = {
   orders: [],
   ingredients: [],
-  total: 0,
-  totalToday: 0,
+  feed: {
+    total: 0,
+    totalToday: 0
+  },
   isLoading: false,
   error: undefined,
   number: 0
@@ -33,8 +37,7 @@ const feedSlice = createSlice({
   reducers: {},
   selectors: {
     selectOrders: (state) => state.orders,
-    selectTotal: (state) => state.total,
-    selectTotalToday: (state) => state.totalToday
+    selectFeed: (state) => state.feed
     // selectIsLoading: (state) => state.isLoading,
     // selectError: (state) => state.error
   },
@@ -46,8 +49,8 @@ const feedSlice = createSlice({
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
         state.orders = action.payload.orders;
-        state.total = action.payload.total;
-        state.totalToday = action.payload.totalToday;
+        state.feed.total = action.payload.total;
+        state.feed.totalToday = action.payload.totalToday;
         state.isLoading = false;
       })
       .addCase(fetchOrders.rejected, (state, action) => {
@@ -57,7 +60,6 @@ const feedSlice = createSlice({
   }
 });
 
-export const { selectOrders, selectTotal, selectTotalToday } =
-  feedSlice.selectors;
+export const { selectOrders, selectFeed } = feedSlice.selectors;
 
 export const feedReducer = feedSlice.reducer;
