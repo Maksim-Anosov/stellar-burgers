@@ -20,7 +20,7 @@ import {
   useNavigate
 } from 'react-router-dom';
 
-import { AppHeader, Modal, OrderInfo } from '@components';
+import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { PrivateRoute } from '../../routes/PrivateRoute';
 import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
@@ -39,7 +39,7 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes>
+      <Routes location={backgroundLocation || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route
@@ -107,6 +107,20 @@ const App = () => {
                 }}
               >
                 <OrderInfo />
+              </Modal>
+            }
+          />
+
+          <Route
+            path='ingredients/:id'
+            element={
+              <Modal
+                title='Детали ингредиента'
+                onClose={() => {
+                  navigate(backgroundLocation);
+                }}
+              >
+                <IngredientDetails />
               </Modal>
             }
           />
