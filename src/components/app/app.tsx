@@ -25,7 +25,7 @@ import { PrivateRoute } from '../../routes/PrivateRoute';
 import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
 import { fetchIngredients } from '../../slices/ingredientsSlice';
-import { getIngredientsApi } from '@api';
+import { fetchUser } from '../../slices/userSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -34,6 +34,7 @@ const App = () => {
   const backgroundLocation = location.state?.background;
   useEffect(() => {
     dispatch(fetchIngredients());
+    dispatch(fetchUser());
   }, []);
 
   return (
@@ -45,7 +46,7 @@ const App = () => {
         <Route
           path='/login'
           element={
-            <PrivateRoute>
+            <PrivateRoute onlyUnAuth>
               <Login />
             </PrivateRoute>
           }
@@ -53,7 +54,7 @@ const App = () => {
         <Route
           path='/register'
           element={
-            <PrivateRoute>
+            <PrivateRoute onlyUnAuth>
               <Register />
             </PrivateRoute>
           }
@@ -61,7 +62,7 @@ const App = () => {
         <Route
           path='/forgot-password'
           element={
-            <PrivateRoute>
+            <PrivateRoute onlyUnAuth>
               <ForgotPassword />
             </PrivateRoute>
           }
@@ -69,7 +70,7 @@ const App = () => {
         <Route
           path='/reset-password'
           element={
-            <PrivateRoute>
+            <PrivateRoute onlyUnAuth>
               <ResetPassword />
             </PrivateRoute>
           }
