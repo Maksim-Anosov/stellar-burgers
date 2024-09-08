@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getFeedsApi } from '@api';
+import { getFeedsApi, getOrderByNumberApi } from '@api';
 import { TIngredient, TOrder } from '@utils-types';
 
 type TFeedState = {
@@ -12,6 +12,7 @@ type TFeedState = {
   isLoading: boolean;
   error: string | undefined;
   number: number;
+  order: TOrder | null;
 };
 
 const inittalState: TFeedState = {
@@ -23,12 +24,18 @@ const inittalState: TFeedState = {
   },
   isLoading: false,
   error: undefined,
-  number: 0
+  number: 0,
+  order: null
 };
 
 export const fetchOrders = createAsyncThunk(
   'feed/fetchOrders',
   async () => await getFeedsApi()
+);
+
+export const fetchOrder = createAsyncThunk(
+  'feed/fetchOrder',
+  getOrderByNumberApi
 );
 
 const feedSlice = createSlice({
@@ -37,7 +44,8 @@ const feedSlice = createSlice({
   reducers: {},
   selectors: {
     selectOrders: (state) => state.orders,
-    selectFeed: (state) => state.feed
+    selectFeed: (state) => state.feed,
+    selectOrder: (state) => state.order
     // selectIsLoading: (state) => state.isLoading,
     // selectError: (state) => state.error
   },
@@ -57,9 +65,23 @@ const feedSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message;
       });
+
+    builder
+      .addCase(fetchOrder.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addCase(fetchOrder.fulfilled, (state, action) => {
+        state.order = action.payload.orders[0];
+        state.isLoading = false;
+      })
+      .addCase(fetchOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      });
   }
 });
 
-export const { selectOrders, selectFeed } = feedSlice.selectors;
+export const { selectOrders, selectFeed, selectOrder } = feedSlice.selectors;
 
 export const feedReducer = feedSlice.reducer;

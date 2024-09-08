@@ -20,7 +20,7 @@ import {
   useNavigate
 } from 'react-router-dom';
 
-import { AppHeader } from '@components';
+import { AppHeader, Modal, OrderInfo } from '@components';
 import { PrivateRoute } from '../../routes/PrivateRoute';
 import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
@@ -29,6 +29,9 @@ import { getIngredientsApi } from '@api';
 
 const App = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const backgroundLocation = location.state?.background;
   useEffect(() => {
     dispatch(fetchIngredients());
   }, []);
@@ -87,8 +90,28 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route path='/feed/:number' element={<OrderInfo />} />
+
         <Route path='*' element={<NotFound404 />} />
       </Routes>
+
+      {backgroundLocation && (
+        <Routes>
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal
+                title='Заказ'
+                onClose={() => {
+                  navigate(backgroundLocation);
+                }}
+              >
+                <OrderInfo />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 };
