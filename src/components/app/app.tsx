@@ -125,6 +125,19 @@ const App = () => {
               </Modal>
             }
           />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <PrivateRoute>
+                <Modal
+                  title='Информаци по заказу'
+                  onClose={() => navigate(backgroundLocation)}
+                >
+                  <OrderInfo />
+                </Modal>
+              </PrivateRoute>
+            }
+          />
         </Routes>
       )}
     </div>

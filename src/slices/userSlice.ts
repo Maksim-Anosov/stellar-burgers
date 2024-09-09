@@ -72,7 +72,7 @@ export const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null;
-        state.isAuth = false;
+        state.isAuth = true;
         state.error = null;
         deleteCookie('accessToken');
         localStorage.removeItem('refreshToken');
