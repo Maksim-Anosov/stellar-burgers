@@ -11,15 +11,7 @@ import {
 } from '@pages';
 import '../../index.css';
 import styles from './app.module.css';
-import {
-  createBrowserRouter,
-  Route,
-  RouterProvider,
-  Routes,
-  useLocation,
-  useNavigate
-} from 'react-router-dom';
-
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { PrivateRoute } from '../../routes/PrivateRoute';
 import { useEffect } from 'react';
