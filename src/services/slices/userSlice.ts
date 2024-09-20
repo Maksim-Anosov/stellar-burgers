@@ -4,7 +4,7 @@ import {
   SerializedError
 } from '@reduxjs/toolkit';
 import { TOrder, TUser } from '@utils-types';
-import { deleteCookie, setCookie } from '../utils/cookie';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 import {
   getOrdersApi,
   getUserApi,

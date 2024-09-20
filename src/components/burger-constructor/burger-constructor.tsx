@@ -7,10 +7,10 @@ import {
   selectConstructorItems,
   selectOrderModalData,
   selectOrderRequest
-} from '../../slices/orderSlice';
+} from '../../services/slices/orderSlice';
 import { useDispatch, useSelector } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
-import { selectUser } from '../../slices/userSlice';
+import { selectUser } from '../../services/slices/userSlice';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */

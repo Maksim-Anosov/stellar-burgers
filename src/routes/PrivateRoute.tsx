@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from '../services/store';
 import { Preloader } from '@ui';
-import { selectIsAuth, selectUser } from '../slices/userSlice';
+import { selectIsAuth, selectUser } from '../services/slices/userSlice';
 
 type PrivateRouteProps = {
   children?: React.ReactElement | React.ReactElement[];

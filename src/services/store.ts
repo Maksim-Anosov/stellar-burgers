@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { ingredientsReducer } from '../slices/ingredientsSlice';
-import { orderReducer } from '../slices/orderSlice';
-import { feedReducer } from '../slices/feedSlice';
-import { userReducer } from '../slices/userSlice';
+import { ingredientsReducer } from './slices/ingredientsSlice';
+import { orderReducer } from './slices/orderSlice';
+import { feedReducer } from './slices/feedSlice';
+import { userReducer } from './slices/userSlice';
 import {
   TypedUseSelectorHook,
   useDispatch as dispatchHook,
