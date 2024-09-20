@@ -85,3 +85,4 @@ const feedSlice = createSlice({
 export const { selectOrders, selectFeed, selectOrder } = feedSlice.selectors;
 
 export const feedReducer = feedSlice.reducer;
+export default feedSlice;

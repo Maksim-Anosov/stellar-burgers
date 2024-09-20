@@ -139,3 +139,4 @@ export const userSlice = createSlice({
 
 export const userReducer = userSlice.reducer;
 export const { selectUser, selectIsAuth, selectOrders } = userSlice.selectors;
+export default userSlice;

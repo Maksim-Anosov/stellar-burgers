@@ -92,3 +92,4 @@ export const {
   selectBun
 } = orderSlice.selectors;
 export const orderReducer = orderSlice.reducer;
+export default orderSlice;

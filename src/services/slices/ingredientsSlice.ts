@@ -51,7 +51,7 @@ export const ingredientsSlice = createSlice({
 });
 
 export const ingredientsReducer = ingredientsSlice.reducer;
-
+export default ingredientsSlice;
 export const {
   selectIngredients,
   selectIngredientsLoader,
