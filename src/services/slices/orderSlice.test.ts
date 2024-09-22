@@ -1,10 +1,12 @@
+import { TNewOrderResponse } from '@api';
 import orderSlice, {
   addIngredients,
   deleteIngredient,
   moveIngredient,
   resetOrder,
   initialState,
-  TOrderState
+  TOrderState,
+  makeOrder
 } from './orderSlice';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
 // import { TNewOrderResponse } from '../../utils/burger-api';
@@ -105,6 +107,7 @@ describe('orderSlice', () => {
         image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png'
       },
       loading: false,
+      error: undefined,
       orderModalData: {
         _id: '643d69a5c3f7b9001cfa093c',
         status: 'done',
@@ -119,5 +122,56 @@ describe('orderSlice', () => {
     const action = resetOrder();
     const state = orderSlice.reducer(initialStateTest, action);
     expect(state).toEqual(initialState);
+  });
+
+  it('makeOrder.pending', () => {
+    const action = {
+      type: makeOrder.pending.type,
+      payload: ['test1', 'test2']
+    };
+
+    const state = orderSlice.reducer(initialState, action);
+    expect(state.loading).toBe(true);
+  });
+
+  it('makeOrder.fulfilled', () => {
+    const testOrder = {
+      _id: '643d69a5c3f7b9001cfa093c',
+      status: 'done',
+      name: 'testOrder',
+      createdAt: '22.09.2024',
+      updatedAt: '22.09.2024',
+      number: 1234567890,
+      ingredients: ['id1', 'id2']
+    };
+
+    const testResponse: TNewOrderResponse = {
+      success: true,
+      name: 'testOrder',
+      order: testOrder
+    };
+
+    const expectedState: TOrderState = {
+      ...initialState,
+      loading: false,
+      orderModalData: testOrder
+    };
+
+    const action = {
+      type: makeOrder.fulfilled.type,
+      payload: testResponse
+    };
+    const state = orderSlice.reducer(initialState, action);
+    expect(state).toEqual(expectedState);
+  });
+
+  it('makeOrder.rejected', () => {
+    const action = {
+      type: makeOrder.rejected.type,
+      error: { message: 'error' }
+    };
+    const state = orderSlice.reducer(initialState, action);
+    expect(state.loading).toBe(false);
+    expect(state.error).toBe('error');
   });
 });

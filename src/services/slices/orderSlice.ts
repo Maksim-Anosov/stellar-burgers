@@ -8,13 +8,15 @@ export interface TOrderState {
   bun: TConstructorIngredient | null;
   loading: boolean;
   orderModalData: TOrder | null;
+  error: string | undefined;
 }
 
 export const initialState: TOrderState = {
   ingredients: [],
   bun: null,
   loading: false,
-  orderModalData: null
+  orderModalData: null,
+  error: undefined
 };
 
 export const makeOrder = createAsyncThunk(
@@ -69,8 +71,8 @@ export const orderSlice = createSlice({
     selectOrderModalData: (state) => state.orderModalData,
     selectBun: (state) => state.bun
   },
-  extraReducers: (buider) => {
-    buider
+  extraReducers: (builder) => {
+    builder
       .addCase(makeOrder.pending, (state) => {
         state.loading = true;
       })
@@ -78,8 +80,9 @@ export const orderSlice = createSlice({
         state.loading = false;
         state.orderModalData = action.payload.order;
       })
-      .addCase(makeOrder.rejected, (state) => {
+      .addCase(makeOrder.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.error.message;
       });
   }
 });
