@@ -3,14 +3,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TOrder } from '@utils-types';
 import { v4 as uuidv4 } from 'uuid';
 
-interface TOrderState {
+export interface TOrderState {
   ingredients: TConstructorIngredient[];
   bun: TConstructorIngredient | null;
   loading: boolean;
   orderModalData: TOrder | null;
 }
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   ingredients: [],
   bun: null,
   loading: false,
@@ -22,7 +22,7 @@ export const makeOrder = createAsyncThunk(
   async (data: string[]) => await orderBurgerApi(data)
 );
 
-const orderSlice = createSlice({
+export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
