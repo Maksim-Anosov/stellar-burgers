@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import { getFeedsApi, getOrderByNumberApi } from '@api';
 import { getFeedsApi, getOrderByNumberApi } from '../../utils/burger-api';
 import { TIngredient, TOrder } from '@utils-types';
 
@@ -16,7 +15,7 @@ type TFeedState = {
   order: TOrder | null;
 };
 
-const inittalState: TFeedState = {
+export const initialState: TFeedState = {
   orders: [],
   ingredients: [],
   feed: {
@@ -41,7 +40,7 @@ export const fetchOrder = createAsyncThunk(
 
 const feedSlice = createSlice({
   name: 'feed',
-  initialState: inittalState,
+  initialState: initialState,
   reducers: {},
   selectors: {
     selectOrders: (state) => state.orders,
@@ -54,7 +53,7 @@ const feedSlice = createSlice({
     builder
       .addCase(fetchOrders.pending, (state) => {
         state.isLoading = true;
-        state.error = '';
+        state.error = undefined;
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
         state.orders = action.payload.orders;
@@ -70,7 +69,7 @@ const feedSlice = createSlice({
     builder
       .addCase(fetchOrder.pending, (state) => {
         state.isLoading = true;
-        state.error = '';
+        state.error = undefined;
       })
       .addCase(fetchOrder.fulfilled, (state, action) => {
         state.order = action.payload.orders[0];
