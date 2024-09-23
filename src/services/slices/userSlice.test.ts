@@ -10,6 +10,8 @@ import userSlice, {
 } from './userSlice';
 
 describe('userSlice', () => {
+  // Login
+
   it('loginUser.pending', () => {
     const action = { type: loginUser.pending.type };
     const state = userSlice.reducer(initialState, action);
@@ -39,6 +41,32 @@ describe('userSlice', () => {
   it('loginUser.rejected', () => {
     const action = {
       type: loginUser.rejected.type,
+      error: { message: 'error' }
+    };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.isAuth).toBe(false);
+    expect(state.error?.message).toBe('error');
+  });
+
+  // Logout
+
+  it('logoutUser.pending', () => {
+    const action = { type: logoutUser.pending.type };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.error).toBe(null);
+  });
+
+  it('logoutUser.fulfilled', () => {
+    const action = { type: logoutUser.fulfilled.type };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.user).toBe(null);
+    expect(state.isAuth).toBe(true);
+    expect(state.error).toBe(null);
+  });
+
+  it('logoutUser.rejected', () => {
+    const action = {
+      type: logoutUser.rejected.type,
       error: { message: 'error' }
     };
     const state = userSlice.reducer(initialState, action);
