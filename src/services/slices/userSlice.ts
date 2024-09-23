@@ -21,7 +21,7 @@ export type TUserState = {
   isAuth: boolean;
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   user: null,
   orders: [],
   error: null,

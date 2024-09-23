@@ -9,7 +9,6 @@ import orderSlice, {
   makeOrder
 } from './orderSlice';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
-// import { TNewOrderResponse } from '../../utils/burger-api';
 
 describe('orderSlice', () => {
   const testIngredientMain: TIngredient = {
