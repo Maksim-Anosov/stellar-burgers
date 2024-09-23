@@ -73,4 +73,42 @@ describe('userSlice', () => {
     expect(state.isAuth).toBe(false);
     expect(state.error?.message).toBe('error');
   });
+
+  // Register
+
+  it('registerUser.pending', () => {
+    const action = { type: registerUser.pending.type };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.isAuth).toBe(true);
+    expect(state.error).toBe(null);
+  });
+
+  it('registerUser.fulfilled', () => {
+    const testUser: TUser = {
+      name: 'testUser',
+      email: 'testEmail'
+    };
+    const action = {
+      type: registerUser.fulfilled.type,
+      payload: {
+        user: testUser,
+        accessToken: 'testToken',
+        refreshToken: 'testToken'
+      }
+    };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.user).toEqual(testUser);
+    expect(state.isAuth).toBe(true);
+    expect(state.error).toBe(null);
+  });
+
+  it('registerUser.rejected', () => {
+    const action = {
+      type: registerUser.rejected.type,
+      error: { message: 'error' }
+    };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.isAuth).toBe(false);
+    expect(state.error?.message).toBe('error');
+  });
 });
