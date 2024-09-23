@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.25% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>131/142</span>
+                <span class='fraction'>143/143</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>13/13</span>
+                <span class='fraction'>19/19</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.25% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>131/142</span>
+                <span class='fraction'>143/143</span>
             </div>
         
             
@@ -205,7 +205,8 @@
 <a name='L140'></a><a href='#L140'>140</a>
 <a name='L141'></a><a href='#L141'>141</a>
 <a name='L142'></a><a href='#L142'>142</a>
-<a name='L143'></a><a href='#L143'>143</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -318,28 +319,29 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -460,28 +462,29 @@ export const userSlice = createSlice({
       })
       // FetchUser
       .addCase(fetchUser.pending, (state) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.error = null;</span>
-<span class="cstat-no" title="statement not covered" >        state.isAuth = true;</span>
+        state.error = null;
+        state.isAuth = true;
       })
       .addCase(fetchUser.fulfilled, (state, action) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.user = action.payload.user;</span>
-<span class="cstat-no" title="statement not covered" >        state.isAuth = true;</span>
+        state.user = action.payload.user;
+        state.isAuth = true;
+        state.error = null;
       })
       .addCase(fetchUser.rejected, (state, action) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.user = null;</span>
-<span class="cstat-no" title="statement not covered" >        state.error = action.error;</span>
+        state.user = null;
+        state.error = action.error;
       })
       // FetchOrders
       .addCase(fetchOrders.pending, (state) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.isAuth = true;</span>
-<span class="cstat-no" title="statement not covered" >        state.error = null;</span>
+        state.isAuth = true;
+        state.error = null;
       })
       .addCase(fetchOrders.fulfilled, (state, action) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.orders = action.payload;</span>
-<span class="cstat-no" title="statement not covered" >        state.error = null;</span>
+        state.orders = action.payload;
+        state.error = null;
       })
       .addCase(fetchOrders.rejected, (state, action) =&gt; {
-<span class="cstat-no" title="statement not covered" >        state.error = action.error;</span>
+        state.error = action.error;
       });
   }
 });
@@ -496,7 +499,7 @@ export default userSlice;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-09-23T07:33:59.835Z
+                at 2024-09-23T09:14:58.768Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

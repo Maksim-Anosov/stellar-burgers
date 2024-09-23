@@ -117,6 +117,7 @@ export const userSlice = createSlice({
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.isAuth = true;
+        state.error = null;
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.user = null;

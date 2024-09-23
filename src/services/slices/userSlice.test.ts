@@ -145,4 +145,78 @@ describe('userSlice', () => {
     const state = userSlice.reducer(initialState, action);
     expect(state.error?.message).toBe('error');
   });
+
+  // Fetch user
+
+  it('fetchUser.pending', () => {
+    const action = { type: fetchUser.pending.type };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.error).toBe(null);
+  });
+
+  it('fetchUser.fulfilled', () => {
+    const testUser: TUser = {
+      name: 'testUser',
+      email: 'testEmail'
+    };
+    const action = {
+      type: fetchUser.fulfilled.type,
+      payload: {
+        user: testUser
+      }
+    };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.user).toEqual(testUser);
+    expect(state.error).toBe(null);
+    expect(state.isAuth).toBe(true);
+  });
+
+  it('fetchUser.rejected', () => {
+    const action = {
+      type: fetchUser.rejected.type,
+      error: { message: 'error' }
+    };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.error?.message).toBe('error');
+  });
+
+  // Fetch orders
+
+  it('fetchOrders.pending', () => {
+    const action = { type: fetchOrders.pending.type };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.error).toBe(null);
+    expect(state.isAuth).toBe(true);
+  });
+
+  it('fetchOrders.fulfilled', () => {
+    const testOrders: TOrder[] = [
+      {
+        _id: '1',
+        ingredients: ['1', '2', '3'],
+        status: 'done',
+        name: 'test',
+        createdAt: 'test',
+        updatedAt: 'test',
+        number: 1
+      }
+    ];
+
+    const action = {
+      type: fetchOrders.fulfilled.type,
+      payload: testOrders
+    };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.orders).toEqual(testOrders);
+    expect(state.error).toBe(null);
+  });
+
+  it('fetchOrders.rejected', () => {
+    const action = {
+      type: fetchOrders.rejected.type,
+      error: { message: 'error' }
+    };
+    const state = userSlice.reducer(initialState, action);
+    expect(state.error?.message).toBe('error');
+  });
 });
