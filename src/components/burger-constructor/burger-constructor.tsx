@@ -36,6 +36,7 @@ export const BurgerConstructor: FC = () => {
 
     const order = constructorItems.ingredients.map((item) => item._id);
     order.push(constructorItems.bun._id);
+    order.unshift(constructorItems.bun._id);
     dispatch(makeOrder(order));
   };
 
