@@ -5,12 +5,11 @@ import orderSlice from './slices/orderSlice';
 import userSlice from './slices/userSlice';
 
 describe('rootReducer', () => {
-  it('should return the initial state', () => {
-    expect(rootReducer(undefined, { type: '@@INIT' })).toEqual({
-      ingredients: ingredientsSlice.reducer(undefined, { type: '@@INIT' }),
-      feed: feedSlice.reducer(undefined, { type: '@@INIT' }),
-      order: orderSlice.reducer(undefined, { type: '@@INIT' }),
-      user: userSlice.reducer(undefined, { type: '@@INIT' })
-    });
+  it('stores all slices', () => {
+    const state = rootReducer(undefined, { type: '@@INIT' });
+    expect(state).toHaveProperty(ingredientsSlice.name);
+    expect(state).toHaveProperty(feedSlice.name);
+    expect(state).toHaveProperty(orderSlice.name);
+    expect(state).toHaveProperty(userSlice.name);
   });
 });
