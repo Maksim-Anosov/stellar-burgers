@@ -4,7 +4,7 @@ import {
   SerializedError
 } from '@reduxjs/toolkit';
 import { TOrder, TUser } from '@utils-types';
-import { deleteCookie, setCookie } from '../utils/cookie';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 import {
   getOrdersApi,
   getUserApi,
@@ -12,7 +12,7 @@ import {
   logoutApi,
   registerUserApi,
   updateUserApi
-} from '@api';
+} from '../../utils/burger-api';
 
 export type TUserState = {
   user: TUser | null;
@@ -21,7 +21,7 @@ export type TUserState = {
   isAuth: boolean;
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   user: null,
   orders: [],
   error: null,
@@ -117,6 +117,7 @@ export const userSlice = createSlice({
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.isAuth = true;
+        state.error = null;
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.user = null;
@@ -139,3 +140,4 @@ export const userSlice = createSlice({
 
 export const userReducer = userSlice.reducer;
 export const { selectUser, selectIsAuth, selectOrders } = userSlice.selectors;
+export default userSlice;

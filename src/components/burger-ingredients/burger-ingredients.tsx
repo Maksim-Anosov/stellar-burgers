@@ -9,7 +9,7 @@ import {
   selectBuns,
   selectMains,
   selectSauces
-} from '../../slices/ingredientsSlice';
+} from '../../services/slices/ingredientsSlice';
 
 export const BurgerIngredients: FC = () => {
   /** TODO: взять переменные из стора */

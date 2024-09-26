@@ -7,10 +7,10 @@ import {
   selectConstructorItems,
   selectOrderModalData,
   selectOrderRequest
-} from '../../slices/orderSlice';
+} from '../../services/slices/orderSlice';
 import { useDispatch, useSelector } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
-import { selectUser } from '../../slices/userSlice';
+import { selectUser } from '../../services/slices/userSlice';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
@@ -36,6 +36,7 @@ export const BurgerConstructor: FC = () => {
 
     const order = constructorItems.ingredients.map((item) => item._id);
     order.push(constructorItems.bun._id);
+    order.unshift(constructorItems.bun._id);
     dispatch(makeOrder(order));
   };
 

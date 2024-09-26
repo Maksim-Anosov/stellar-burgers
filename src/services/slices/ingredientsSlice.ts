@@ -1,6 +1,6 @@
 import { TIngredient } from '@utils-types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getIngredientsApi } from '../utils/burger-api';
+import { getIngredientsApi } from '../../utils/burger-api';
 
 export type TIngredientsState = {
   ingredients: TIngredient[];
@@ -8,7 +8,7 @@ export type TIngredientsState = {
   error: string | undefined;
 };
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
   ingredients: [],
   loading: false,
   error: undefined
@@ -51,7 +51,7 @@ export const ingredientsSlice = createSlice({
 });
 
 export const ingredientsReducer = ingredientsSlice.reducer;
-
+export default ingredientsSlice;
 export const {
   selectIngredients,
   selectIngredientsLoader,

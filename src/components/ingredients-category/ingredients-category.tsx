@@ -3,12 +3,15 @@ import { TIngredientsCategoryProps } from './type';
 import { TIngredient } from '@utils-types';
 import { IngredientsCategoryUI } from '../ui/ingredients-category';
 import { useSelector } from '../../services/store';
-import { selectBun, selectConstructorItems } from '../../slices/orderSlice';
+import {
+  selectBun,
+  selectConstructorItems
+} from '../../services/slices/orderSlice';
 
 export const IngredientsCategory = forwardRef<
   HTMLUListElement,
   TIngredientsCategoryProps
->(({ title, titleRef, ingredients }, ref) => {
+>(({ title, titleRef, ingredients, ...other }, ref) => {
   /** TODO: взять переменную из стора */
   const orderIngredients = useSelector(selectConstructorItems);
   const bun = useSelector(selectBun);
@@ -37,6 +40,7 @@ export const IngredientsCategory = forwardRef<
       ingredients={ingredients}
       ingredientsCounters={ingredientsCounters}
       ref={ref}
+      {...other}
     />
   );
 });

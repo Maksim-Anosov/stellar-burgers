@@ -8,9 +8,9 @@ import {
   fetchOrder,
   selectOrder,
   selectOrders
-} from '../../slices/feedSlice';
+} from '../../services/slices/feedSlice';
 import { useParams } from 'react-router-dom';
-import { selectIngredients } from '../../slices/ingredientsSlice';
+import { selectIngredients } from '../../services/slices/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
   const ingredients: TIngredient[] = useSelector(selectIngredients).ingredients;

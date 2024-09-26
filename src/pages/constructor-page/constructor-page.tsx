@@ -1,7 +1,7 @@
 import { useSelector } from '../../services/store';
 
 import styles from './constructor-page.module.css';
-import { selectIngredients } from '../../slices/ingredientsSlice';
+import { selectIngredients } from '../../services/slices/ingredientsSlice';
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';

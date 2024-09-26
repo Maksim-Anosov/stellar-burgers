@@ -1,20 +1,22 @@
-import { orderBurgerApi } from '@api';
+import { orderBurgerApi } from '../../utils/burger-api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TOrder } from '@utils-types';
 import { v4 as uuidv4 } from 'uuid';
 
-interface TOrderState {
+export interface TOrderState {
   ingredients: TConstructorIngredient[];
   bun: TConstructorIngredient | null;
   loading: boolean;
   orderModalData: TOrder | null;
+  error: string | undefined;
 }
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   ingredients: [],
   bun: null,
   loading: false,
-  orderModalData: null
+  orderModalData: null,
+  error: undefined
 };
 
 export const makeOrder = createAsyncThunk(
@@ -22,7 +24,7 @@ export const makeOrder = createAsyncThunk(
   async (data: string[]) => await orderBurgerApi(data)
 );
 
-const orderSlice = createSlice({
+export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
@@ -69,8 +71,8 @@ const orderSlice = createSlice({
     selectOrderModalData: (state) => state.orderModalData,
     selectBun: (state) => state.bun
   },
-  extraReducers: (buider) => {
-    buider
+  extraReducers: (builder) => {
+    builder
       .addCase(makeOrder.pending, (state) => {
         state.loading = true;
       })
@@ -78,8 +80,9 @@ const orderSlice = createSlice({
         state.loading = false;
         state.orderModalData = action.payload.order;
       })
-      .addCase(makeOrder.rejected, (state) => {
+      .addCase(makeOrder.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.error.message;
       });
   }
 });
@@ -92,3 +95,4 @@ export const {
   selectBun
 } = orderSlice.selectors;
 export const orderReducer = orderSlice.reducer;
+export default orderSlice;
