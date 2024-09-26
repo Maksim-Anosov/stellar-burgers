@@ -1,7 +1,10 @@
 import { useSelector } from '../../services/store';
 
 import styles from './constructor-page.module.css';
-import { selectIngredients } from '../../services/slices/ingredientsSlice';
+import {
+  ingredientsApi,
+  selectIngredients
+} from '../../services/slices/ingredientsSlice';
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
@@ -9,21 +12,25 @@ import { FC } from 'react';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
-  const ingredients = useSelector(selectIngredients);
+  // const ingredients = useSelector(selectIngredients);
+  const { data, isLoading, error } = ingredientsApi.useGetIngredientsQuery();
+  const ingredients = data?.data;
 
-  if (!ingredients.loading && ingredients.ingredients.length === 0) {
+  if (!isLoading && ingredients?.length === 0) {
     return <p className='message'>Нет ни одного ингредиента</p>;
   }
 
-  if (!ingredients.loading && ingredients.error) {
+  if (!isLoading && error) {
     return (
-      <p className='error'>Запрос завершился с ошибкой: {ingredients.error}</p>
+      <p className='error'>
+        Запрос завершился с ошибкой: {JSON.stringify(error)}
+      </p>
     );
   }
 
   return (
     <>
-      {ingredients.loading ? (
+      {isLoading ? (
         <Preloader />
       ) : (
         <main className={styles.containerMain}>

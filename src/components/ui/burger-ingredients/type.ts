@@ -3,9 +3,9 @@ import { TIngredient, TTabMode } from '@utils-types';
 
 export type BurgerIngredientsUIProps = {
   currentTab: TTabMode;
-  buns: TIngredient[];
-  mains: TIngredient[];
-  sauces: TIngredient[];
+  buns: TIngredient[] | undefined;
+  mains: TIngredient[] | undefined;
+  sauces: TIngredient[] | undefined;
   titleBunRef: RefObject<HTMLHeadingElement>;
   titleMainRef: RefObject<HTMLHeadingElement>;
   titleSaucesRef: RefObject<HTMLHeadingElement>;

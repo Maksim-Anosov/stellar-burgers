@@ -25,7 +25,7 @@ const App = () => {
   const navigate = useNavigate();
   const backgroundLocation = location.state?.background;
   useEffect(() => {
-    dispatch(fetchIngredients());
+    // dispatch(fetchIngredients());
     dispatch(fetchUser());
   }, []);
 

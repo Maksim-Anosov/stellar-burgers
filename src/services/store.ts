@@ -8,6 +8,7 @@ import {
   useDispatch as dispatchHook,
   useSelector as selectorHook
 } from 'react-redux';
+import { baseApi } from '../utils/burger-api';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
@@ -17,8 +18,16 @@ export const rootReducer = combineReducers({
 });
 
 const store = configureStore({
-  reducer: rootReducer,
-  devTools: process.env.NODE_ENV !== 'production'
+  reducer: {
+    ingredients: ingredientsReducer,
+    order: orderReducer,
+    feed: feedReducer,
+    user: userReducer,
+    [baseApi.reducerPath]: baseApi.reducer
+  },
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(baseApi.middleware)
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

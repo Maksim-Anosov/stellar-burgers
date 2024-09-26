@@ -1,6 +1,10 @@
 import { TIngredient } from '@utils-types';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getIngredientsApi } from '../../utils/burger-api';
+import {
+  baseApi,
+  getIngredientsApi,
+  TIngredientsResponse
+} from '../../utils/burger-api';
 
 export type TIngredientsState = {
   ingredients: TIngredient[];
@@ -59,3 +63,14 @@ export const {
   selectMains,
   selectSauces
 } = ingredientsSlice.selectors;
+
+export const ingredientsApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getIngredients: builder.query<TIngredientsResponse, void>({
+      query: () => '/ingredients'
+    })
+  }),
+  overrideExisting: true
+});
+
+export const { useGetIngredientsQuery } = ingredientsApi;

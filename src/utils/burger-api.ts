@@ -1,7 +1,12 @@
 import { setCookie, getCookie } from './cookie';
 import { TIngredient, TOrder, TOrdersData, TUser } from './types';
-
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const URL = process.env.BURGER_API_URL;
+
+export const baseApi = createApi({
+  baseQuery: fetchBaseQuery({ baseUrl: URL }),
+  endpoints: () => ({})
+});
 
 const checkResponse = <T>(res: Response): Promise<T> =>
   res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
@@ -57,7 +62,7 @@ export const fetchWithRefresh = async <T>(
   }
 };
 
-type TIngredientsResponse = TServerResponse<{
+export type TIngredientsResponse = TServerResponse<{
   data: TIngredient[];
 }>;
 
