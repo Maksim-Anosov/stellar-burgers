@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getFeedsApi, getOrderByNumberApi } from '../../utils/burger-api';
+import {
+  baseApi,
+  getFeedsApi,
+  getOrderByNumberApi,
+  TFeedsResponse,
+  TOrderResponse
+} from '../../utils/burger-api';
 import { TIngredient, TOrder } from '@utils-types';
 
 type TFeedState = {
@@ -86,3 +92,22 @@ export const { selectOrders, selectFeed, selectOrder } = feedSlice.selectors;
 
 export const feedReducer = feedSlice.reducer;
 export default feedSlice;
+
+// ---------------------------------------------------------------------------------------------------
+
+export const feedApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    fetchOrders: builder.query<TFeedsResponse, void>({
+      query: () => '/orders/all'
+    }),
+    fetchOrder: builder.query<TOrderResponse, number>({
+      query: (number: number) => ({
+        url: `/orders/${number}`,
+        method: 'GET'
+      })
+    })
+  }),
+  overrideExisting: true
+});
+
+export const { useFetchOrdersQuery, useFetchOrderQuery } = feedApi;

@@ -7,24 +7,32 @@ import {
   fetchOrders,
   fetchOrder,
   selectOrder,
-  selectOrders
+  selectOrders,
+  feedApi
 } from '../../services/slices/feedSlice';
 import { useParams } from 'react-router-dom';
-import { selectIngredients } from '../../services/slices/ingredientsSlice';
+import {
+  ingredientsApi,
+  selectIngredients
+} from '../../services/slices/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
-  const ingredients: TIngredient[] = useSelector(selectIngredients).ingredients;
-  const dispatch = useDispatch();
-  const orderData = useSelector(selectOrder);
+  // const ingredients: TIngredient[] = useSelector(selectIngredients).ingredients;
   const number = Number(useParams().number);
+  const { data: dataIngredients } = ingredientsApi.useGetIngredientsQuery();
+  const { data: dataOrder } = feedApi.useFetchOrderQuery(number);
+  const ingredients = dataIngredients?.data;
+  // const dispatch = useDispatch();
+  // const orderData = useSelector(selectOrder);
+  const orderData = dataOrder?.orders[0];
 
-  useEffect(() => {
-    dispatch(fetchOrder(number));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchOrder(number));
+  // }, [dispatch]);
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
-    if (!orderData || !ingredients.length) return null;
+    if (!orderData || !ingredients?.length) return null;
 
     const date = new Date(orderData.createdAt);
 
