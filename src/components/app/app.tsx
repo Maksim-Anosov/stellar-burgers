@@ -16,7 +16,6 @@ import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { PrivateRoute } from '../../routes/PrivateRoute';
 import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
-import { fetchIngredients } from '../../services/slices/ingredientsSlice';
 import { fetchUser } from '../../services/slices/userSlice';
 
 const App = () => {
@@ -25,7 +24,6 @@ const App = () => {
   const navigate = useNavigate();
   const backgroundLocation = location.state?.background;
   useEffect(() => {
-    // dispatch(fetchIngredients());
     dispatch(fetchUser());
   }, []);
 

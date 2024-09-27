@@ -1,7 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { ingredientsReducer } from './slices/ingredientsSlice';
 import { orderReducer } from './slices/orderSlice';
-import { feedReducer } from './slices/feedSlice';
 import { userReducer } from './slices/userSlice';
 import {
   TypedUseSelectorHook,
@@ -11,17 +9,13 @@ import {
 import { baseApi } from '../utils/burger-api';
 
 export const rootReducer = combineReducers({
-  ingredients: ingredientsReducer,
   order: orderReducer,
-  feed: feedReducer,
   user: userReducer
 });
 
 const store = configureStore({
   reducer: {
-    ingredients: ingredientsReducer,
     order: orderReducer,
-    feed: feedReducer,
     user: userReducer,
     [baseApi.reducerPath]: baseApi.reducer
   },

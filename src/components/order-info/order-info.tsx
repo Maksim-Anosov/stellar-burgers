@@ -1,36 +1,18 @@
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { useDispatch, useSelector } from '../../services/store';
-import {
-  fetchOrders,
-  fetchOrder,
-  selectOrder,
-  selectOrders,
-  feedApi
-} from '../../services/slices/feedSlice';
+import { feedApi } from '../../services/slices/feedSlice';
 import { useParams } from 'react-router-dom';
-import {
-  ingredientsApi,
-  selectIngredients
-} from '../../services/slices/ingredientsSlice';
+import { ingredientsApi } from '../../services/slices/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
-  // const ingredients: TIngredient[] = useSelector(selectIngredients).ingredients;
   const number = Number(useParams().number);
   const { data: dataIngredients } = ingredientsApi.useGetIngredientsQuery();
   const { data: dataOrder } = feedApi.useFetchOrderQuery(number);
   const ingredients = dataIngredients?.data;
-  // const dispatch = useDispatch();
-  // const orderData = useSelector(selectOrder);
   const orderData = dataOrder?.orders[0];
 
-  // useEffect(() => {
-  //   dispatch(fetchOrder(number));
-  // }, [dispatch]);
-
-  /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients?.length) return null;
 

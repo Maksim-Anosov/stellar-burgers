@@ -1,11 +1,11 @@
 export type FeedInfoUIProps = {
   feed: any;
-  readyOrders: number[];
-  pendingOrders: number[];
+  readyOrders: number[] | undefined;
+  pendingOrders: number[] | undefined;
 };
 
 export type HalfColumnProps = {
-  orders: number[];
+  orders: number[] | undefined;
   title: string;
   textColor?: string;
 };

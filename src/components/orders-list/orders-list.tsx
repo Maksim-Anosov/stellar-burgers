@@ -5,7 +5,7 @@ import { OrdersListUI } from '@ui';
 
 export const OrdersList: FC<OrdersListProps> = memo(({ orders }) => {
   if (!orders || !Array.isArray(orders)) {
-    return null; // or return an empty component
+    return null;
   }
 
   const orderByDate = [...orders].sort(
