@@ -3,6 +3,7 @@ import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
 import {
   makeOrder,
+  orderApi,
   resetOrder,
   selectConstructorItems,
   selectOrderModalData,
@@ -21,13 +22,15 @@ export const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [makeOrder, { isLoading, data }] = orderApi.useMakeOrderMutation();
+
   const constructorItems = {
     bun: selectconstructorItems.bun || null,
     ingredients: selectconstructorItems.ingredients
   };
 
   const onOrderClick = () => {
-    if (!constructorItems.bun || orderRequest) return;
+    if (!constructorItems.bun || isLoading) return;
 
     if (!user) {
       navigate('/login');
@@ -37,7 +40,9 @@ export const BurgerConstructor: FC = () => {
     const order = constructorItems.ingredients.map((item) => item._id);
     order.push(constructorItems.bun._id);
     order.unshift(constructorItems.bun._id);
-    dispatch(makeOrder(order));
+    // dispatch(makeOrder(order));
+
+    makeOrder(order);
   };
 
   const closeOrderModal = () => {
@@ -57,9 +62,10 @@ export const BurgerConstructor: FC = () => {
   return (
     <BurgerConstructorUI
       price={price}
-      orderRequest={orderRequest}
+      orderRequest={isLoading}
       constructorItems={constructorItems}
-      orderModalData={orderModalData}
+      orderModalData={data?.order}
+      orderReset={selectconstructorItems.orderModalData}
       onOrderClick={onOrderClick}
       closeOrderModal={closeOrderModal}
     />

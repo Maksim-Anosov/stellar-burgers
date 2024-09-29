@@ -1,13 +1,18 @@
-import { orderBurgerApi } from '../../utils/burger-api';
+import {
+  baseApi,
+  orderBurgerApi,
+  TNewOrderResponse
+} from '../../utils/burger-api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TOrder } from '@utils-types';
+import { getCookie } from '../../utils/cookie';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface TOrderState {
   ingredients: TConstructorIngredient[];
   bun: TConstructorIngredient | null;
   loading: boolean;
-  orderModalData: TOrder | null;
+  orderModalData: TOrder | undefined;
   error: string | undefined;
 }
 
@@ -15,7 +20,7 @@ export const initialState: TOrderState = {
   ingredients: [],
   bun: null,
   loading: false,
-  orderModalData: null,
+  orderModalData: undefined,
   error: undefined
 };
 
@@ -62,7 +67,7 @@ export const orderSlice = createSlice({
       state.ingredients = [];
       state.bun = null;
       state.loading = false;
-      state.orderModalData = null;
+      state.orderModalData = undefined;
     }
   },
   selectors: {
@@ -96,3 +101,24 @@ export const {
 } = orderSlice.selectors;
 export const orderReducer = orderSlice.reducer;
 export default orderSlice;
+
+export const orderApi = baseApi.injectEndpoints({
+  endpoints: (build) => ({
+    makeOrder: build.mutation<TNewOrderResponse, string[]>({
+      query: (data) => ({
+        url: '/orders',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          authorization: getCookie('accessToken')
+        } as HeadersInit,
+        body: JSON.stringify({
+          ingredients: data
+        })
+      })
+      // invalidatesTags: ['Order']
+    })
+  })
+});
+
+export const { useMakeOrderMutation } = orderApi;
