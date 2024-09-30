@@ -1,8 +1,4 @@
-import {
-  baseApi,
-  orderBurgerApi,
-  TNewOrderResponse
-} from '../../utils/burger-api';
+import { baseApi, TNewOrderResponse } from '../../utils/burger-api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TOrder } from '@utils-types';
 import { getCookie } from '../../utils/cookie';
@@ -11,23 +7,14 @@ import { v4 as uuidv4 } from 'uuid';
 export interface TOrderState {
   ingredients: TConstructorIngredient[];
   bun: TConstructorIngredient | null;
-  loading: boolean;
   orderModalData: TOrder | undefined;
-  error: string | undefined;
 }
 
 export const initialState: TOrderState = {
   ingredients: [],
   bun: null,
-  loading: false,
-  orderModalData: undefined,
-  error: undefined
+  orderModalData: undefined
 };
-
-export const makeOrder = createAsyncThunk(
-  'order/fetchOrder',
-  async (data: string[]) => await orderBurgerApi(data)
-);
 
 export const orderSlice = createSlice({
   name: 'order',
@@ -66,39 +53,27 @@ export const orderSlice = createSlice({
     resetOrder: (state) => {
       state.ingredients = [];
       state.bun = null;
-      state.loading = false;
       state.orderModalData = undefined;
+    },
+    setOrderModalData: (state, action) => {
+      state.orderModalData = action.payload;
     }
   },
   selectors: {
     selectConstructorItems: (state) => state,
-    selectOrderRequest: (state) => state.loading,
     selectOrderModalData: (state) => state.orderModalData,
     selectBun: (state) => state.bun
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(makeOrder.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(makeOrder.fulfilled, (state, action) => {
-        state.loading = false;
-        state.orderModalData = action.payload.order;
-      })
-      .addCase(makeOrder.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      });
   }
 });
-export const { addIngredients, deleteIngredient, moveIngredient, resetOrder } =
-  orderSlice.actions;
 export const {
-  selectConstructorItems,
-  selectOrderRequest,
-  selectOrderModalData,
-  selectBun
-} = orderSlice.selectors;
+  addIngredients,
+  deleteIngredient,
+  moveIngredient,
+  resetOrder,
+  setOrderModalData
+} = orderSlice.actions;
+export const { selectConstructorItems, selectOrderModalData, selectBun } =
+  orderSlice.selectors;
 export const orderReducer = orderSlice.reducer;
 export default orderSlice;
 

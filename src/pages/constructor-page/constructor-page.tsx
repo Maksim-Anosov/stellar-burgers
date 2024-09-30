@@ -6,19 +6,15 @@ import { Preloader } from '../../components/ui';
 import { FC } from 'react';
 
 export const ConstructorPage: FC = () => {
-  const { data, isLoading, error } = ingredientsApi.useGetIngredientsQuery();
+  const { data, isLoading, isError } = ingredientsApi.useGetIngredientsQuery();
   const ingredients = data?.data;
 
   if (!isLoading && ingredients?.length === 0) {
     return <p className='message'>Нет ни одного ингредиента</p>;
   }
 
-  if (!isLoading && error) {
-    return (
-      <p className='error'>
-        Запрос завершился с ошибкой: {JSON.stringify(error)}
-      </p>
-    );
+  if (!isLoading && isError) {
+    return <p className='error'>Запрос завершился с ошибкой</p>;
   }
 
   return (
