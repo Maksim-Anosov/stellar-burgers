@@ -10,15 +10,12 @@ import { baseApi } from '../utils/burger-api';
 
 export const rootReducer = combineReducers({
   order: orderReducer,
-  user: userReducer
+  user: userReducer,
+  [baseApi.reducerPath]: baseApi.reducer
 });
 
 const store = configureStore({
-  reducer: {
-    order: orderReducer,
-    user: userReducer,
-    [baseApi.reducerPath]: baseApi.reducer
-  },
+  reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware)

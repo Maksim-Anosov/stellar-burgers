@@ -21,6 +21,7 @@ export const DefaultConstructor: Story = {
     isLoading: false,
     price: 0,
     orderModalData: undefined,
+    showSuccessModal: false,
     onOrderClick: () => {},
     closeOrderModal: () => {}
   }

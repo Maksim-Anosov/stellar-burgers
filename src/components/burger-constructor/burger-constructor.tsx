@@ -4,23 +4,24 @@ import { BurgerConstructorUI } from '@ui';
 import {
   orderApi,
   resetOrder,
-  selectConstructorItems,
-  selectOrderModalData,
-  setOrderModalData
+  selectConstructorItems
+  // selectOrderModalData,
+  // setOrderModalData
 } from '../../services/slices/orderSlice';
-import store, { useDispatch, useSelector } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
 import { selectUser } from '../../services/slices/userSlice';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
   const selectconstructorItems = useSelector(selectConstructorItems);
-  const orderModalData = useSelector(selectOrderModalData);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const [makeOrder, { isLoading, data, isSuccess }] =
     orderApi.useMakeOrderMutation();
+  const [showSuccessModal, setShowSuccessModal] = useState(isSuccess);
 
   const constructorItems = {
     bun: selectconstructorItems.bun || null,
@@ -39,15 +40,17 @@ export const BurgerConstructor: FC = () => {
     order.push(constructorItems.bun._id);
     order.unshift(constructorItems.bun._id);
 
-    await makeOrder(order).then((res: any) => {
-      dispatch(setOrderModalData(res.data?.order));
-    });
+    await makeOrder(order);
+    setShowSuccessModal(!showSuccessModal);
   };
 
   const closeOrderModal = () => {
-    dispatch(resetOrder());
-    console.log(data);
-    console.log(isSuccess);
+    if (isSuccess) {
+      dispatch(resetOrder());
+      setShowSuccessModal(!showSuccessModal);
+    } else {
+      setShowSuccessModal(!showSuccessModal);
+    }
   };
 
   const price = useMemo(
@@ -65,9 +68,10 @@ export const BurgerConstructor: FC = () => {
       price={price}
       isLoading={isLoading}
       constructorItems={constructorItems}
-      orderModalData={orderModalData}
+      orderModalData={data?.order}
       onOrderClick={onOrderClick}
       closeOrderModal={closeOrderModal}
+      showSuccessModal={showSuccessModal}
     />
   );
 };
