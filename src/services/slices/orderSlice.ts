@@ -78,10 +78,11 @@ export const orderApi = baseApi.injectEndpoints({
         body: JSON.stringify({
           ingredients: data
         })
-      })
-      // invalidatesTags: ['Order']
+      }),
+      invalidatesTags: ['Orders']
     })
-  })
+  }),
+  overrideExisting: true
 });
 
 export const { useMakeOrderMutation } = orderApi;

@@ -1,11 +1,12 @@
 import { setCookie, getCookie } from './cookie';
 import { TIngredient, TOrder, TOrdersData, TUser } from './types';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react';
 const URL = process.env.BURGER_API_URL;
 
 export const baseApi = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: URL }),
-  endpoints: () => ({})
+  baseQuery: retry(fetchBaseQuery({ baseUrl: URL }), { maxRetries: 0 }),
+  endpoints: () => ({}),
+  tagTypes: ['Orders']
 });
 
 const checkResponse = <T>(res: Response): Promise<T> =>
@@ -142,7 +143,7 @@ export type TRegisterData = {
   password: string;
 };
 
-type TAuthResponse = TServerResponse<{
+export type TAuthResponse = TServerResponse<{
   refreshToken: string;
   accessToken: string;
   user: TUser;
@@ -209,7 +210,7 @@ export const resetPasswordApi = (data: { password: string; token: string }) =>
       return Promise.reject(data);
     });
 
-type TUserResponse = TServerResponse<{ user: TUser }>;
+export type TUserResponse = TServerResponse<{ user: TUser }>;
 
 export const getUserApi = () =>
   fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {

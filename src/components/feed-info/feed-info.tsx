@@ -14,7 +14,10 @@ const getOrders = (
     .slice(0, 20);
 
 export const FeedInfo: FC = () => {
-  const { data } = feedApi.useFetchOrdersQuery();
+  const { data } = feedApi.useFetchOrdersQuery(undefined, {
+    pollingInterval: 3000,
+    skipPollingIfUnfocused: true
+  });
   const orders: TOrder[] | undefined = data?.orders;
   const feed = {
     total: data?.total,

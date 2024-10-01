@@ -7,7 +7,8 @@ import {
 export const feedApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     fetchOrders: builder.query<TFeedsResponse, void>({
-      query: () => '/orders/all'
+      query: () => '/orders/all',
+      providesTags: ['Orders']
     }),
     fetchOrder: builder.query<TOrderResponse, number>({
       query: (number: number) => ({

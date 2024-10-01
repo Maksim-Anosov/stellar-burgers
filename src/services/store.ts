@@ -7,6 +7,7 @@ import {
   useSelector as selectorHook
 } from 'react-redux';
 import { baseApi } from '../utils/burger-api';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
 export const rootReducer = combineReducers({
   order: orderReducer,
@@ -20,6 +21,8 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware)
 });
+
+setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof rootReducer>;
 

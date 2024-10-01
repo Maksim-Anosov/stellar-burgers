@@ -5,8 +5,6 @@ import {
   orderApi,
   resetOrder,
   selectConstructorItems
-  // selectOrderModalData,
-  // setOrderModalData
 } from '../../services/slices/orderSlice';
 import { useDispatch, useSelector } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
