@@ -16,16 +16,24 @@ import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { PrivateRoute } from '../../routes/PrivateRoute';
 import { useEffect } from 'react';
 import { useDispatch } from '../../services/store';
-import { fetchUser } from '../../services/slices/userSlice';
+import {
+  fetchUser,
+  useFetchUserQuery,
+  userApi
+} from '../../services/slices/userSlice';
+import { deleteCookie } from '../../utils/cookie';
 
 const App = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const backgroundLocation = location.state?.background;
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, []);
+  // const [data] = useFetchUserQuery();
+  // useEffect(() => {
+  //   // dispatch(fetchUser());
+  //   deleteCookie('accessToken');
+  //   dispatch(userApi.endpoints.fetchUser.initiate());
+  // }, []);
 
   return (
     <div className={styles.app}>

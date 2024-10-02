@@ -4,15 +4,20 @@ import {
   SerializedError
 } from '@reduxjs/toolkit';
 import { TOrder, TUser } from '@utils-types';
-import { deleteCookie, setCookie } from '../../utils/cookie';
+import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
 import {
+  baseApi,
   getOrdersApi,
   getUserApi,
   loginUserApi,
   logoutApi,
   registerUserApi,
+  TAuthResponse,
+  TLoginData,
+  TUserResponse,
   updateUserApi
 } from '../../utils/burger-api';
+import { get } from 'http';
 
 export type TUserState = {
   user: TUser | null;
@@ -41,7 +46,11 @@ export const fetchOrders = createAsyncThunk('user/fetchOrders', getOrdersApi);
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setIsAuth: (state, action) => {
+      state.isAuth = action.payload;
+    }
+  },
   selectors: {
     selectUser: (state) => state.user,
     selectIsAuth: (state) => state.isAuth,
@@ -140,4 +149,46 @@ export const userSlice = createSlice({
 
 export const userReducer = userSlice.reducer;
 export const { selectUser, selectIsAuth, selectOrders } = userSlice.selectors;
+export const { setIsAuth } = userSlice.actions;
 export default userSlice;
+
+// ------------------------------------------------------------------------------------------------------------------------
+
+export const userApi = baseApi.injectEndpoints({
+  endpoints: (build) => ({
+    loginUser: build.mutation<TAuthResponse, TLoginData>({
+      query: (data) => ({
+        url: '/auth/login',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(data)
+      })
+      // invalidatesTags: ['User']
+    }),
+    fetchUser: build.query<TUserResponse, void>({
+      query: () => ({
+        url: '/auth/user',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          Authorization: getCookie('accessToken')
+        }
+      })
+      // providesTags: ['User']
+    })
+    //   logoutUser: build.mutation<TServerResponse<{}>, void>({
+    //     query: () => ({
+    //       url: '/auth/logout',
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json;charset=utf-8',
+    //         Authorization: `Bearer ${getCookie('accessToken')}`
+    //       },
+    // }),
+  }),
+  overrideExisting: true
+});
+
+export const { useLoginUserMutation, useFetchUserQuery } = userApi;

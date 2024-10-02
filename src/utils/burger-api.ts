@@ -6,7 +6,7 @@ const URL = process.env.BURGER_API_URL;
 export const baseApi = createApi({
   baseQuery: retry(fetchBaseQuery({ baseUrl: URL }), { maxRetries: 0 }),
   endpoints: () => ({}),
-  tagTypes: ['Orders']
+  tagTypes: ['Orders', 'User']
 });
 
 const checkResponse = <T>(res: Response): Promise<T> =>
