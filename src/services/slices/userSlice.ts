@@ -17,7 +17,6 @@ import {
   TUserResponse,
   updateUserApi
 } from '../../utils/burger-api';
-import { get } from 'http';
 
 export type TUserState = {
   user: TUser | null;

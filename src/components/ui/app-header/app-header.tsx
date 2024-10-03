@@ -9,8 +9,9 @@ import {
   ProfileIcon
 } from '@zlden/react-developer-burger-ui-components';
 import clsx from 'clsx';
+import { Preloader } from '../preloader';
 
-export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
+export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName, isLoading }) => (
   <header className={styles.header}>
     <nav className={`${styles.menu} p-4`}>
       <div className={styles.menu_part_left}>
@@ -45,16 +46,26 @@ export const AppHeaderUI: FC<TAppHeaderUIProps> = ({ userName }) => (
         </NavLink>
       </div>
       <div className={styles.link_position_last}>
-        <ProfileIcon type={'primary'} />
+        {/* <ProfileIcon type={'primary'} /> */}
         <NavLink
           to={'/profile'}
           className={({ isActive }) =>
             clsx(styles.link, { [styles.link_active]: isActive })
           }
         >
-          <p className='text text_type_main-default ml-2'>
-            {userName || 'Личный кабинет'}
-          </p>
+          {isLoading && <Preloader />}
+          {!isLoading && userName && (
+            <>
+              <ProfileIcon type={'primary'} />
+              <p className='text text_type_main-default ml-2'>{userName}</p>
+            </>
+          )}
+          {!isLoading && !userName && (
+            <>
+              <ProfileIcon type={'primary'} />
+              <p className='text text_type_main-default ml-2'>Личный кабинет</p>
+            </>
+          )}
         </NavLink>
       </div>
     </nav>
