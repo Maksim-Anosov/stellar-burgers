@@ -42,6 +42,7 @@ export const Login: FC = () => {
     localStorage.setItem('refreshToken', data.refreshToken);
     // dispatch(userApi.endpoints.fetchUser.initiate());
     refetchUser();
+    return <Preloader />;
   }
 
   return (
